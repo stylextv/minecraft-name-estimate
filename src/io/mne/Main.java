@@ -9,7 +9,7 @@ public class Main {
 	private static final String PROFILE_NAME_CHARACTERS = "abcdefghijklmnopqrstuvwxyz0123456789";
 	private static final int MINIMAL_PROFILE_NAME_LENGTH = 3;
 	private static final int MAXIMAL_PROFILE_NAME_LENGTH = 16;
-	private static final int SAMPLE_AMOUNT_PER_LENGTH = 100;
+	private static final int SAMPLE_AMOUNT_PER_LENGTH = 1000;
 	
 	private static final String PROFILE_API_URL_FORMAT = "https://api.mojang.com/users/profiles/minecraft/%s";
 	private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -27,14 +27,14 @@ public class Main {
 			for(int i = 0; i < SAMPLE_AMOUNT_PER_LENGTH; i++) {
 				
 				String profileName = randomProfileName(length);
-				boolean profileExists = profileExists(profileName);
+				String message = String.format("profile_name: " + profileName);
+				System.out.println(message);
 				
-				if(profileExists) {
-					String message = String.format("profile_name: " + profileName);
-					System.out.println(message);
-					
-					existingProfileAmount++;
-				}
+				boolean profileExists = profileExists(profileName);
+				message = String.format("profile_exists: " + profileExists);
+				System.out.println(message);
+				
+				if(profileExists) existingProfileAmount++;
 			}
 			
 			double estimate = (double) existingProfileAmount / SAMPLE_AMOUNT_PER_LENGTH * amount;
